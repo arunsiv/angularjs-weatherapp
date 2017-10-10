@@ -13,6 +13,11 @@ weatherApp.config(function($routeProvider){
             templateUrl: '/pages/forecast.html',
             controller: 'forecastController'
         })
+    
+        .when('/forecast/:days', {
+            templateUrl: '/pages/forecast_five.html',
+            controller: 'forecastController'
+        })
 });
 
 //CONTROLLER
@@ -26,19 +31,37 @@ weatherApp.controller('mainController', ['$scope', '$log', 'weatherService', fun
     
 }]);
 
-weatherApp.controller('forecastController', ['$scope', '$resource', '$log', 'weatherService', function ($scope, $resource, $log, weatherService) {
-    $log.info('Forecast Controller');
+weatherApp.controller('forecastController', ['$scope', '$resource', '$routeParams', '$log', 'weatherService', function ($scope, $resource, $routeParams, $log, weatherService) {
     
-    var currentWeatherAPI = "http://api.openweathermap.org/data/2.5/weather";
-    var fiveDayWeatherAPI = "http://api.openweathermap.org/data/2.5/forecast";
+    var API = "";
     var key = "7e1adc5df1abac4afd81b0c5dbb14b11";
     
-    $scope.city = weatherService.city;    
+    $scope.city = weatherService.city;
+    $scope.days = $routeParams.days;
     
-    $scope.weatherAPI = $resource(fiveDayWeatherAPI, {callback: "JSON_CALLBACK"}, {get: {method: "JSONP"}});
+    if ($scope.days === '5') {
+        $log.log("if: " + $scope.days);
+        API = "http://api.openweathermap.org/data/2.5/forecast";
+    } else {
+        $log.log("else: " + $scope.days);
+        API = "http://api.openweathermap.org/data/2.5/weather";
+    }
+    
+     $log.log("API: " + API);
+    
+    $scope.weatherAPI = $resource(API, {callback: "JSON_CALLBACK"}, {get: {method: "JSONP"}});
     $scope.weatherResult = $scope.weatherAPI.get({ q: $scope.city, appid: key });
     
     $log.log($scope.weatherResult);
+    
+    $scope.convertToCelcius = function (degK) {
+        var celcius = degK - 273.15;
+        return parseFloat(celcius).toFixed(2);
+    };
+    
+    $scope.convertToDate = function (dt) {
+        return new Date(dt * 1000);
+    };
 }]);
 
 //SERVICE
