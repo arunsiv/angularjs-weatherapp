@@ -16,9 +16,9 @@ Days <a href="#/forecast/1" ng-class="{ 'bg-primary': days === '1'}"> 1 </a> |
             
             <div ng-switch-when="5">
                 <forecast-result ng-repeat="w in weatherResult.list" weather-result-object="w" 
-                                 forecast-convert-to-celcius="convertToCelcius(kelvin)" 
-                                 forecast-convert-to-date="convertToDate(currentDate)" 
-                                 date-format="MMM d, y">
+                     forecast-convert-to-celcius="convertToCelcius(kelvin)" 
+                     forecast-convert-to-date="convertToDate(currentDate)" 
+                     date-format="MMM d, y">
                 </forecast-result>
             </div>
         </div>
