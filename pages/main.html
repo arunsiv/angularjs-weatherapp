@@ -4,6 +4,17 @@
         <div class="form-group">
             <input type="text" length="5" class="form-control" ng-model="city" />
         </div>
-        <a href="#/forecast" class="btn btn-primary">Get Forecast</a>
+
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                Select Days
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#/forecast/1">1 Day</a></li>
+                <li><a href="#/forecast/5">5 Days</a></li>
+            </ul>
+        </div>
+        
     </div>
 </div>

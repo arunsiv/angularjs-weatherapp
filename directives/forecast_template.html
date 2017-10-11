@@ -1,0 +1,11 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="pannel-title">{{ forecastConvertToDate({ currentDate: weatherResultObject.dt} ) | date: dateFormat }}</h3>
+    </div>
+    <div class="panel-body">
+        Condition: {{ weatherResultObject.weather[0].main }}
+    </div>
+    <div class="panel-body">
+        Temperature: {{ forecastConvertToCelcius({ kelvin: weatherResultObject.main.temp }) }} C
+    </div>
+</div>

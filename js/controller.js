@@ -1,25 +1,3 @@
-//MODULE
-var weatherApp = angular.module("weatherApp", ['ngRoute', 'ngResource']);
-
-//ROUTES
-weatherApp.config(function($routeProvider){
-    $routeProvider
-        .when('/', {
-            templateUrl: '/pages/main.html',
-            controller: 'mainController'
-        })
-    
-        .when('/forecast', {
-            templateUrl: '/pages/forecast.html',
-            controller: 'forecastController'
-        })
-    
-        .when('/forecast/:days', {
-            templateUrl: '/pages/forecast_five.html',
-            controller: 'forecastController'
-        })
-});
-
 //CONTROLLER
 weatherApp.controller('mainController', ['$scope', '$log', 'weatherService', function ($scope, $log, weatherService) {
     $log.info('Main Controller');
@@ -35,9 +13,11 @@ weatherApp.controller('forecastController', ['$scope', '$resource', '$routeParam
     
     var API = "";
     var key = "7e1adc5df1abac4afd81b0c5dbb14b11";
-    
+
     $scope.city = weatherService.city;
     $scope.days = $routeParams.days;
+    
+    $log.log($scope.days);
     
     if ($scope.days === '5') {
         $log.log("if: " + $scope.days);
@@ -63,8 +43,3 @@ weatherApp.controller('forecastController', ['$scope', '$resource', '$routeParam
         return new Date(dt * 1000);
     };
 }]);
-
-//SERVICE
-weatherApp.service('weatherService', function() {
-    this.city = 'Mauldin,SC';
-});

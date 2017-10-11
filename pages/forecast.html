@@ -1,16 +1,25 @@
 <h3>Forecast for {{ city }}</h3>
 
+<hr />
+Days <a href="#/forecast/1" ng-class="{ 'bg-primary': days === '1'}"> 1 </a> | 
+<a href="#/forecast/5" ng-class="{ 'bg-primary': days === '5'}"> 5 </a>
+<hr />
+
 <div class="row">
     <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="pannel-title">{{ convertToDate(weatherResult.dt) | date: 'MMM d, y' }}</h3>
+        <div ng-switch="days">
+            <div ng-switch-when="1">
+                <forecast-result weather-result-object="weatherResult" forecast-convert-to-celcius="convertToCelcius(kelvin)" 
+                     forecast-convert-to-date="convertToDate(currentDate)" date-format="MMM d, y">
+                </forecast-result>
             </div>
-            <div class="panel-body">
-                Condition: {{ weatherResult.weather[0].main }}
-            </div>
-            <div class="panel-body">
-                Temperature: {{ convertToCelcius(weatherResult.main.temp) }} C
+            
+            <div ng-switch-when="5">
+                <forecast-result ng-repeat="w in weatherResult.list" weather-result-object="w" 
+                                 forecast-convert-to-celcius="convertToCelcius(kelvin)" 
+                                 forecast-convert-to-date="convertToDate(currentDate)" 
+                                 date-format="MMM d, y">
+                </forecast-result>
             </div>
         </div>
     </div>
